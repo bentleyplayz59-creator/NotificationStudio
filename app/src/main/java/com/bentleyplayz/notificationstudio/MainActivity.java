@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -131,9 +132,18 @@ public class MainActivity extends Activity {
         list.setBackgroundColor(Color.TRANSPARENT);
         adapter = new AppAdapter();
         list.setAdapter(adapter);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-1, dp(210));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-1, dp(320));
         lp.topMargin = dp(8);
         appCard.addView(list, lp);
+        list.setOnTouchListener((view, event) -> {
+            int action = event.getActionMasked();
+            if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
+                view.getParent().requestDisallowInterceptTouchEvent(true);
+            } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+                view.getParent().requestDisallowInterceptTouchEvent(false);
+            }
+            return false;
+        });
         list.setOnItemClickListener((parent, view, position, id) -> {
             selectedApp = apps.get(position);
             selectedLabel.setText("Selected: " + selectedApp.loadLabel(getPackageManager()));
