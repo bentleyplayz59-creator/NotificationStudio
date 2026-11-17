@@ -1,7 +1,5 @@
 package com.bentleyplayz.notificationstudio;
 
-import android.app.AlarmManager;
-import android.app.BroadcastReceiver;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 
@@ -81,7 +80,8 @@ public class NotificationReceiver extends BroadcastReceiver {
         Intent view = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         PendingIntent action = PendingIntent.getActivity(context, requestCode, view,
             PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-        builder.addAction(new Notification.Action.Builder(null, label, action).build());
+        builder.addAction(new Notification.Action.Builder(
+            Icon.createWithResource(context, R.drawable.ic_notification), label, action).build());
     }
 
     private static Bitmap toBitmap(Context context, Drawable drawable) {
