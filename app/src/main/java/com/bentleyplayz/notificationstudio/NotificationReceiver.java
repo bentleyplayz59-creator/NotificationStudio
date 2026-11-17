@@ -16,7 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 
 public class NotificationReceiver extends BroadcastReceiver {
-    private static final String CHANNEL = "notification_studio_simulations";
+    private static final String CHANNEL = "notification_studio_messages";
 
     @Override public void onReceive(Context context, Intent intent) {
         int id = intent.getIntExtra("notificationId", (int)(System.currentTimeMillis() & 0x7fffffff));
@@ -25,8 +25,8 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     public static void show(Context context, Intent data, int id) {
         if (Build.VERSION.SDK_INT >= 26) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL, "Simulated notifications", NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription("Clearly labeled test notifications created by Notification Studio.");
+            NotificationChannel channel = new NotificationChannel(CHANNEL, "Messages", NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("Notifications created in Notification Studio.");
             NotificationManager manager = context.getSystemService(NotificationManager.class);
             if (manager != null) manager.createNotificationChannel(channel);
         }
@@ -43,10 +43,9 @@ public class NotificationReceiver extends BroadcastReceiver {
         Notification.Builder builder = Build.VERSION.SDK_INT >= 26
             ? new Notification.Builder(context, CHANNEL) : new Notification.Builder(context);
         builder.setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle("[SIMULATED] " + title)
+            .setContentTitle(title)
             .setContentText(message)
             .setStyle(new Notification.BigTextStyle().bigText(message))
-            .setSubText("SIMULATED • Sent by Notification Studio")
             .setContentIntent(content)
             .setAutoCancel(true)
             .setCategory(Notification.CATEGORY_MESSAGE);
