@@ -115,7 +115,7 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams hp = new LinearLayout.LayoutParams(-1, -2);
         hp.topMargin = dp(5);
         root.addView(heading, hp);
-        TextView intro = label("Build and schedule your own test notifications.", 14, MUTED, false);
+        TextView intro = label("Build and schedule notifications.", 14, MUTED, false);
         LinearLayout.LayoutParams ip = new LinearLayout.LayoutParams(-1, -2);
         ip.topMargin = dp(5); ip.bottomMargin = dp(18);
         root.addView(intro, ip);
@@ -160,10 +160,6 @@ public class MainActivity extends Activity {
         addField(contentCard, "Notification message", fields, 1, true);
         messageInput = fields[1];
         messageInput.setText("This is a test notification created with Notification Studio.");
-        TextView note = label("Notifications are visibly marked as SIMULATED and are sent by Notification Studio.", 11, MUTED, false);
-        LinearLayout.LayoutParams np = new LinearLayout.LayoutParams(-1, -2);
-        np.topMargin = dp(9);
-        contentCard.addView(note, np);
         root.addView(contentCard);
 
         LinearLayout actionsCard = card();
@@ -192,9 +188,6 @@ public class MainActivity extends Activity {
         schedule.setOnClickListener(v -> chooseSchedule());
         root.addView(scheduleCard);
 
-        TextView footer = label("SIMULATION TOOL  •  NOT AFFILIATED WITH SELECTED APPS", 10, MUTED, true);
-        footer.setGravity(Gravity.CENTER);
-        root.addView(footer);
         setContentView(scroll);
     }
 
@@ -257,7 +250,7 @@ public class MainActivity extends Activity {
             return;
         }
         NotificationReceiver.show(this, makeNotificationData(), (int)(System.currentTimeMillis() & 0x7fffffff));
-        Toast.makeText(this, "Simulated notification sent.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Notification sent.", Toast.LENGTH_SHORT).show();
     }
 
     private void chooseSchedule() {
